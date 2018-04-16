@@ -1,0 +1,56 @@
+---
+imports:
+   - path: https://storage.googleapis.com/rs-gdm-stl-master/constants_v1/constants_v1.py
+     name: constants_v1.py
+   - path: https://storage.googleapis.com/rs-gdm-stl-master/ssl_certificate_v1/ssl_certificate_v1.py
+     name: ssl_certificate_v1.py
+   
+##############################################
+   resources:
+    # Constants ##############################       
+    - type: constants_v1.py
+      name: binnys-constants
+      properties:
+          region: &REGION us-central1
+
+    #Network###################################
+    - type: compute.v1.network
+      name: binnys-net01
+      properties:
+          autoCreateSubnetworks: False
+          network_description: 'Binnys-Network'
+
+    - type: compute.v1.subnetwork
+      name: binnys-Production-web-snet01-net01
+      properties:
+          network: $(ref.binnys-net01.selfLink)
+          ipCidrRange: 192.168.1.0/24
+          description: Web DMZ
+
+    - type: compute.v1.subnetwork
+      name: binnys-Production-Data-snet02-net01
+      properties: 
+         network: $(ref.binnys-net01.selfLink)
+         ipCidrRange: 192.168.2.0/24
+         description: Data Services
+
+    - type: compute.v1.subnetworks
+      name: binnys-Production_Shared-snet03-net01
+      properties:
+          network: $(ref.binnys-net01.selfLink)
+          ipCidrRange: 192.168.3.0/24
+          description: Shared Devices
+
+    - type: compute.v1.subnetworks
+      name: binnys-Staging-snet04-net01
+      properties:
+          network: $(ref.binnys-net01.selfLink)
+          ipCidrRange: 192.168.4.0/24
+          description: staging
+
+    - type: compute.v1.subnetworks
+      name: binny-Development-snet05-net01
+      properties:
+          network: $(ref.binnys-net01.selfLink)
+          ipCidrRange: 192.168.5.0/24
+          description: Development
