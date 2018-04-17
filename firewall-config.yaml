@@ -8,19 +8,19 @@ resources:
     - type: constants_v1.py
       name: binnys-constants
       properties:
-         NETwork: &NET global/NETworks/binnys-NET01 
+         network: &NET global/networks/binnys-NET01 
 
     # Firewall Rules ###############################
     - type: rs_bastions_firewall_rule_v1.py
       name: binnys-bastion
       properties:
-         NETwork: *NET
+         network: *NET
          directInstanceAccess: true
     
     - type: compute.v1.firewall
       name: binnys-Production_Shared
       properties:
-         NETwork: *NET
+         network: *NET
          direction: INGRESS
          targetTags:
              - all-internal
@@ -36,7 +36,7 @@ resources:
     - type: compute.v1.firewall
       name: binnys-bastion
       properties:
-         NETwork: *NET
+         network: *NET
          direction: INGRESS
          targetTags:
              - bastion-access
@@ -51,7 +51,7 @@ resources:
     - type: compute.v1.firewall
       name: binnys-CLB 
       properties:
-         NETwork: *NET
+         network: *NET
          direction: INGRESS
          targetTags:
              - http
@@ -66,7 +66,7 @@ resources:
     - type: compute.v1.firewall
       name: binnys-All-internal 
       properties:
-         NETwork: *NET
+         network: *NET
          direction: EGRESS
          targetTags:
              - nat-gw
