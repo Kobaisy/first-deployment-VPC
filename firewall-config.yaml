@@ -4,8 +4,6 @@ imports:
      name: constants_v1.py
    - path: https://storage.cloud.google.com/rs-gdm-stl-master/firewall_rule_v1/firewall_rule_v1.py                                                     
      name: firewall_rule_v1.py
-   - path: https://storage.googleapis.com/rs-gdm-stl-master/rs_bastions_firewall_rule_v1/rs_bastions_firewall_rule_v1.py
-     name: rs_bastions_firewall_rule_v1.py
 
 ####################################################
 resources:
@@ -25,16 +23,17 @@ resources:
     - type: compute.v1.firewall
       name: binnys-Production_Shared
       properties:
-         network: *net
+         network: *NET
          direction: INGRESS
          targetTags:
              - all-internal
          allowed:
              - IPProtocol: tcp
                ports:
-               - 80
-               - 22
-         sourceRanges: '192.168.3.0/24'
+                 - 80
+                 - 22
+         sourceRanges: 
+             - '192.168.3.0/24'
 
 
     - type: compute.v1.firewall

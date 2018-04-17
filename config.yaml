@@ -35,7 +35,7 @@ imports:
          description: Data Services
 
     - type: compute.v1.subnetworks
-      name: binnys-Production_Shared-snet03-net01
+      name: binnys-Production-Shared-snet03-net01
       properties:
           network: $(ref.binnys-net01.selfLink)
           ipCidrRange: 192.168.3.0/24
