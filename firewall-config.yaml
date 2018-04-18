@@ -1,0 +1,82 @@
+---
+imports:
+   - path: https://storage.googleapis.com/rs-gdm-stl-master/constants_v1/constants_v1.py
+     name: constants_v1.py
+   - path: https://storage.cloud.google.com/rs-gdm-stl-master/firewall_rule_v1/firewall_rule_v1.py 
+     name: firewall_rule_v1.py
+   - path: https://storage.googleapis.com/rs-gdm-stl-master/rs_bastions_firewall_rule_v1/rs_bastions_firewall_rule_v1.py
+     name: rs_bastions_firewall_rule_v1.py
+
+####################################################
+resources:
+    #Constants #####################################
+    - type: constants_v1.py
+      name: binnys-constants
+      properties:
+         network: &NET global/networks/binnys-NET01 
+
+    # Firewall Rules ###############################
+    - type: rs_bastions_firewall_rule_v1.py
+      name: binnys-bastion
+      properties:
+         network: *NET
+         directInstanceAccess: true
+    
+    - type: compute.v1.firewall
+      name: binnys-Production_Shared
+      properties:
+         network: *NET
+         direction: INGRESS
+         targetTags:
+             - all-internal
+         allowed:
+             - IPProtocol: tcp
+               ports:
+                 - 80
+                 - 22
+         sourceRanges: 
+             - '192.168.3.0/24'
+
+
+    - type: compute.v1.firewall
+      name: binnys-bastion
+      properties:
+         network: *NET
+         direction: INGRESS
+         targetTags:
+             - bastion-access
+         allowed:
+             - IPProtocol: tcp
+               ports:
+                 - 22
+         sourceRanges: 
+             - '192.168.3.0/24'
+
+
+    - type: compute.v1.firewall
+      name: binnys-CLB 
+      properties:
+         network: *NET
+         direction: INGRESS
+         targetTags:
+             - http
+         allowed:
+             - IPProtocol: tcp
+               ports:
+                 - 80
+         sourceRanges: 
+             - '192.168.1.0/24'
+
+
+    - type: compute.v1.firewall
+      name: binnys-All-internal 
+      properties:
+         network: *NET
+         direction: EGRESS
+         targetTags:
+             - nat-gw
+         allowed:
+             - IPProtocol: tcp
+         sourceRanges: 
+             - '0.0.0.0/0'
+
