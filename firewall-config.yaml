@@ -2,6 +2,11 @@
 imports:
    - path: https://storage.googleapis.com/rs-gdm-stl-master/constants_v1/constants_v1.py
      name: constants_v1.py
+   - path: https://storage.cloud.google.com/rs-gdm-stl-master/firewall_rule_v1/firewall_rule_v1.py 
+     name: firewall_rule_v1.py
+   - path: https://storage.googleapis.com/rs-gdm-stl-master/rs_bastions_firewall_rule_v1/rs_bastions_firewall_rule_v1.py
+     name: rs_bastions_firewall_rule_v1.py
+
 ####################################################
 resources:
     #Constants #####################################
